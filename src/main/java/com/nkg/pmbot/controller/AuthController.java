@@ -87,6 +87,8 @@ public class AuthController {
 		 * ResponseEntity(new ApiResponse(false, "Username is already taken!"),
 		 * HttpStatus.BAD_REQUEST); }
 		 */
+		
+		System.out.println("========================================>>>>>>>>>>>>>>I am here");
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 			return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
@@ -95,10 +97,14 @@ public class AuthController {
 		// Creating user's account
 		User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
 				signUpRequest.getPassword());
+		System.out.println("========================================>>>>>>>>>>>>>>I am here2.1");
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		System.out.println("========================================>>>>>>>>>>>>>>I am here2.2");
 
 		User result = userService.createUser(user);
+		
+		System.out.println("========================================>>>>>>>>>>>>>>I am here2");
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{username}")
 				.buildAndExpand(result.getUsername()).toUri();

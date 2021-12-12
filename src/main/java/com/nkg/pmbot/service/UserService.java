@@ -53,6 +53,9 @@ public class UserService {
 
 	@Autowired
 	private Environment appProperties;
+	
+	@Autowired
+	private SendMail sendMail;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -77,7 +80,7 @@ public class UserService {
 
 		logger.info("HexString created:", hexString);
 
-		SendMail.sendEmail(user.getEmail(), appProperties.getProperty(AppConstants.PROP_VALIDATE_EMAIL_SUB),
+		sendMail.sendEmail(user.getEmail(), appProperties.getProperty(AppConstants.PROP_VALIDATE_EMAIL_SUB),
 				appProperties.getProperty(AppConstants.PROP_VALIDATE_EMAIL_BODY).replace("{0}", validateLink), true, null);
 
 		logger.info("User creation email sent.", user.getId());
